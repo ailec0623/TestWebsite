@@ -1,0 +1,42 @@
+name: Deploy to AWS
+
+on:
+  push:
+    branches:
+      - main
+env:
+  ARTIFACT_NAME: myapp.zip
+  CODEDEPLOY_APPLICATION_NAME: WebApp
+  CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP_NAME: WebAppDeploymentGroup
+  AWS_REGION: us-west-2
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Build and package
+      run: |
+        ls
+        zip -r ${{env.ARTIFACT_NAME}} .
+        ls
+
+
+    - name: AWS CREDENTIALS
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{secrets.AWS_ACCESS_KEY}}
+        aws-secret-access-key: ${{secrets.AWS_SECRET_KEY}}
+        aws-region: ${{env.AWS_REGION}}
+
+    - name: Copy artifact to S3
+      run: |
+        aws s3 cp ${{env.ARTIFACT_NAME}} s3://${{secrets.CICD_BUCKET}}
