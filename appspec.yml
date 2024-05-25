@@ -1,0 +1,18 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /opt/TestWeb
+hooks:
+  ApplicationStop:
+    - location: bin/stop_server.sh
+      timeout: 300
+      runas: root
+  BeforeInstall:
+    - location: bin/install_dependencies.sh
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: bin/start_server.sh
+      timeout: 300
+      runas: root
