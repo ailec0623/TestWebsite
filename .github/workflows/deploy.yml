@@ -5,7 +5,7 @@ on:
         branches:
             - main
 env:
-    ARTIFACT_NAME: myapp.zip
+    ARTIFACT_NAME: myapp.tar.gz
     CODEDEPLOY_APPLICATION_NAME: WebApp
     CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP_NAME: WebAppDeploymentGroup
     AWS_REGION: us-east-1
@@ -25,9 +25,8 @@ jobs:
 
         - name: Build and package
           run: |
-                ls
-                zip -r ${{env.ARTIFACT_NAME}} .
-                ls
+                tar -czvf "${{env.ARTIFACT_NAME}}" bin/ src/ appspec.yml --ignore-failed-read
+
 
 
         - name: AWS CREDENTIALS
