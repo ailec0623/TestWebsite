@@ -8,7 +8,7 @@ env:
     ARTIFACT_NAME: myapp.zip
     CODEDEPLOY_APPLICATION_NAME: WebApp
     CODEDEPLOY_APPLICATION_DEPLOYMENT_GROUP_NAME: WebAppDeploymentGroup
-    AWS_REGION: us-east-1
+    AWS_REGION: us-west-2
 
 jobs:
     build-and-deploy:
