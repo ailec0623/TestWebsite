@@ -9,23 +9,30 @@ body {
     height: 100vh;
 }
 
-h2 {
-    color: #333;
-}
-
-form {
+.container {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+form {
+    width: 100%;
 }
 
 label {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
+    text-align: left;
 }
 
 textarea {
