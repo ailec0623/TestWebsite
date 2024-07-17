@@ -21,7 +21,7 @@ def discord():
         if message:
             send_to_discord(message)
             return redirect(url_for('discord'))
-    return render_template('index.html')
+    return render_template('discord.html')
 
 @app.route('/')
 def hello_world():
