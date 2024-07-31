@@ -4,4 +4,4 @@ sudo yum install python pip -y
 sudo pip install flask
 sudo pip install boto3
 sudo pip install werkzeug
-from itsdangerous
+sudo pip install itsdangerous
