@@ -4,6 +4,7 @@ import requests
 import random
 import boto3
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
+import re
 
 app = Flask(__name__, template_folder='../templates',
             static_folder='../static')
@@ -17,6 +18,8 @@ dynamodb = boto3.resource('dynamodb', region_name='us-west-2')
 table = dynamodb.Table('WebStackDynamodbStack9E738F00-UsersTable9725E9C8-MBN9SKXT0ZW0')
 ses = boto3.client('ses', region_name='us-west-2')
 
+ERE = r'^[a-zA-Z0-9_!?]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]{2, }&'
+
 # URL generator
 s = URLSafeTimedSerializer('your_secret_key')
 
@@ -26,6 +29,9 @@ def register():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
+
+        if not re.match(ERE, email):
+            return "Email incorrect"
         
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
         
@@ -134,6 +140,10 @@ def discord():
             send_to_discord(message)
             return redirect(url_for('discord'))
     return render_template('discord.html')
+
+@app.route('/chat')
+def chat():
+    return render_template('chat.html')
 
 @app.route('/')
 def hello_world():
